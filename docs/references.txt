@@ -1,0 +1,9 @@
+## References ##
+
+# Drupal #
+https://www.drupal.org
+
+# LEMP #
+
+http://www.liberiangeek.net/2015/06/how-to-install-nginx-php5-mariadb-wordpress-on-ubuntu-15-04/
+https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-on-ubuntu-12-04

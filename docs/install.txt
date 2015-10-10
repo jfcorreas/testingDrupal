@@ -1,0 +1,15 @@
+## Commands to install Drupal on nginx and mariadb - LEMP (over Ubuntu) ##
+
+# Install nginx
+ sudo apt-get install nginx
+ 
+# Install MariaDB
+ sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xcbcb082a1bb943db
+ sudo add-apt-repository 'deb http://ftp.osuosl.org/pub/mariadb/repo/10.0/ubuntu trusty main'
+ sudo apt-get update
+ sudo apt-get install mariadb-server
+ sudo apt-get install mariadb-client
+ sudo mysql_secure_installation 
+
+# Install PHP5
+ sudo apt-get install php5 php5-mysql php5-fpm php5-curl php5-gd php5-intl php-pear php5-imagick php5-imap php5-mcrypt php5-memcache php5-ming php5-ps php5-pspell php5-recode php5-snmp php5-sqlite php5-tidy php5-xmlrpc php5-xsl php5-json
