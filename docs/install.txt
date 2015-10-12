@@ -13,3 +13,63 @@
 
 # Install PHP5
  sudo apt-get install php5 php5-mysql php5-fpm php5-curl php5-gd php5-intl php-pear php5-imagick php5-imap php5-mcrypt php5-memcache php5-ming php5-ps php5-pspell php5-recode php5-snmp php5-sqlite php5-tidy php5-xmlrpc php5-xsl php5-json
+
+# Install Drupal8
+
+ cd /usr/share/nginx/html
+ sudo mv ~/Descargas/drupal-8.0.0-rc1.tar.gz ./
+ sudo tar --strip-components=1 -xzvf drupal-8.0.0-rc1.tar.gz
+ cd /usr/share/nginx/html/sites/default
+ sudo cp default.services.yml services.yml
+ sudo cp default.settings.php settings.php
+ chmod a+w se*
+ sudo chmod a+w se*
+
+# NGINX configuration
+
+sudo gedit /etc/nginx/sites-available/default and add
+
+ server {
+        listen   80; ## listen for ipv4; this line is default and implied
+        #listen   [::]:80 default ipv6only=on; ## listen for ipv6
+        
+        # This is the full path to your index file 
+        root /usr/share/nginx/html;
+        index index.php index.html index.htm;
+
+        # Make site accessible from http://localhost/ 
+        # This will be your domain name
+        server_name localhost;
+
+  location / {
+                index index.php;
+                # This is cool because no php is touched for static content
+                try_files $uri $uri/ @rewrite;
+                expires max;
+              }
+
+  location @rewrite {
+                # Some modules enforce no slash (/) at the end of the URL
+                # Else this rewrite block wouldn&#39;t be needed (GlobalRedirect)
+                rewrite ^/(.*)$ /index.php?q=$1;
+              }
+
+    # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+   location ~ .php$ {
+                #fastcgi_pass 127.0.0.1:9000;
+                # With php5-fpm:
+                fastcgi_pass unix:/var/run/php5-fpm.sock;
+                fastcgi_index index.php;
+                fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+                include fastcgi_params;
+                }
+}
+
+sudo /etc/init.d/nginx reload
+
+# Secure Drupal8 (post-installation)
+ cd /usr/share/nginx/html/sites
+ sudo chmod go-w default/
+ cd default/
+ sudo chmod 644 se*
+
